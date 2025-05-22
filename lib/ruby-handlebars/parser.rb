@@ -5,13 +5,13 @@ module Handlebars
     rule(:space)       { match('\s').repeat(1) }
     rule(:space?)      { space.maybe }
     rule(:dot)         { str('.') }
-    rule(:gt)          { str('>')}
-    rule(:hash)        { str('#')}
-    rule(:slash)       { str('/')}
-    rule(:ocurly)      { str('{')}
-    rule(:ccurly)      { str('}')}
-    rule(:pipe)        { str('|')}
-    rule(:eq)          { str('=')}
+    rule(:gt)          { str('>') }
+    rule(:hash)        { str('#') }
+    rule(:slash)       { str('/') }
+    rule(:ocurly)      { str('{').repeat(2) }
+    rule(:ccurly)      { str('}').repeat(2) }
+    rule(:pipe)        { str('|') }
+    rule(:eq)          { str('=') }
 
 
     rule(:docurly)     { ocurly >> ocurly }
@@ -26,7 +26,7 @@ module Handlebars
     rule(:directory)   { (else_kw >> space? >> dccurly).absent? >> match['@\-a-zA-Z0-9_\/\?'].repeat(1) }
     rule(:path)        { identifier >> (dot >> (identifier | else_kw)).repeat }
 
-    rule(:nocurly)     { match('[^{}]') }
+    rule(:nocurly)     { match('[^{{}}]') }
     rule(:eof)         { any.absent? }
     rule(:template_content) {
       (
